@@ -1,23 +1,6 @@
-spring.profiles.active: dev
-management:
-  security:
-    enabled: false
-  endpoints:
-    web:
-      exposure:
-        include: "*"
-  endpoint:
-    health:
-      show-details: always
-info:
-  name: demo-admin
-  serviceName: demo-admin
-  productName: demo
-  moduleName: admin
-  version: 1.0-SNAPSHOT
-  description: "业务微服务"
+server:
+  port: 11111
 
----
 spring:
   datasource:
     url: jdbc:mysql://192.168.0.99:3306/honor_db?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=Asia/Shanghai
@@ -27,44 +10,84 @@ spring:
     initialSize: 50
     minIdle: 50
     maxActive: 150
-  profiles: dev
+  redis:
+    host: 192.168.0.71
+    password: b840fxG941c15Y59e41
+    port: 6366
+    timeout: 3000
+  rabbitmq:
+    host: mq.hearglobal.com
+    port: 5672
+    userName: honor
+    password: 123456
+    exchange: honor.exchange
+    virtualHost: honor
+    routingKey:
+  elasticsearch:
+    host: es.hearglobal.com
+    port: 10000
+    userName: honor
+    password: qwer@123
+  mongo:
+    host: mongo.hearglobal.com
+    port: 27017u
+    database: honor_db
+    userName: honor
+    password: qwer@123
   application:
-    name: demo-admin
-    serviceName: demo-admin
-    productName: demo
+    metadata:
+      name: "中国联通楼宇支撑系统"
+      title: "中国联通楼宇支撑系统"
+      copyright: "<strong>Copyright &copy; 2018-2020 <a href='http://www.chinaunicom.com/' target='_blank'>Chinaunicom Co.,Ltd</a>.</strong> All rights reserved."
+      version: "<b>Version</b> 2.0.0"
+    swagger:
+      enableSwagger: true
+      enableAdmin: false
+    name: honor-admin-1.0-SNAPSHOT
+    serviceName: honor-admin-1.0-SNAPSHOT
+    productName: honor
     moduleName: admin
     version: 1.0-SNAPSHOT
-  cloud:
-    config:
-      label: master
-      discovery:
-        enabled: true
-        serviceId: demo-configure
-eureka:
-  instance:
-    prefer-ip-address: true
-  client:
-    service-url:
-      defaultZone: http://demo:demo1234@localhost:8888/eureka/
-
----
-spring:
-  profiles: prod
-  application:
-    name: demo-admin
-    serviceName: demo-admin
-    productName: demo
-    moduleName: admin
-    version: 1.0-SNAPSHOT
-  cloud:
-    config:
-      label: master
-      discovery:
-        enabled: true
-        serviceId: demo-configure
-eureka:
-  instance:
-    prefer-ip-address: true
-  client:
-    service-url:
-      defaultZone: http://demo:demo1234@eureka.hearglobal.com:10000/eureka/
+    keys:
+      sessionIdKey: honor-session-id
+      captchaIdKey: honor-captcha-id
+      accessTokenKey: honor-access-token
+    authentication:
+      authenticationUrl: http://localhost:11111/auth/authentication
+      authorizationUrl: http://localhost:11111/authorization/authorization
+      excludeUrls: /auth/
+      loginUrl: http://localhost:11111/login
+      appId: 99999999999999999999
+      appKey: 88888888888888888888
+      appSecret: 7777777777777777777
+      appSignature: 66666666666666666666
+    sequence:
+      default:
+        namespace: default-sequence
+        prefix:
+        minValue: 10000000
+        maxValue: 99999999
+        offset: 1
+    service:
+      RECTANGLE-INCISION:
+        name: "localhost:11111"
+        path: "/rectangle-data-capture/api/data-crawling"
+        type: "http"
+        method: "POST"
+        comment: "矩形数据"
+      ETERNITY-COUNTER-INCR:
+        name: "eternity-counter"
+        path: "/front/counter/incrCounter"
+        type: "service"
+        method: "POST"
+        comment: "计数器接口"
+    error:
+      L_ERR_10000:
+        code: 10000
+        message: "执行成功"
+      L_ERR_99999:
+        code: 99999
+        message: "系统异常"
+      L_ERR_10008:
+        code: 10008
+        message: "调用计数器异常 "
