@@ -1,0 +1,189 @@
+spring.profiles.active: dev
+server:
+  port: 8866
+
+---
+spring:
+  profiles: dev
+  datasource:
+    url: jdbc:mysql://mysql.hearglobal.com:3306/demo_db?useUnicode=true&characterEncoding=utf-8&useSSL=true&useJDBCCompliantTimezoneShift=true&serverTimezone=Asia/Shanghai
+    userName: demo
+    password: My,hg1234
+    supportUtf8mb4: 1
+    initialSize: 30
+    minIdle: 10
+    maxActive: 50
+  redis:
+    host: redis.hearglobal.com
+    password: b840fxG941c15Y59e41
+    port: 6366
+    timeout: 3000
+  rabbitmq:
+    host: mq.hearglobal.com
+    port: 5672
+    userName: demo
+    password: 123456
+    exchange: demo.exchange
+    virtualHost: demo
+    routingKey:
+  elasticsearch:
+    host: es.hearglobal.com
+    port: 10000
+    userName: demo
+    password: qwer@123
+  mongo:
+    host: mongo.hearglobal.com
+    port: 27017
+    database: demo_db
+    userName: demo
+    password: qwer@123
+  application:
+    swagger:
+      enableSwagger: true
+      enableAdmin: false
+    name: demo-gateway
+    serviceName: demo-gateway
+    productName: demo
+    moduleName: gateway
+    version: 1.0-SNAPSHOT
+    keys:
+      sessionIdKey: demo-session-id
+      captchaIdKey: demo-captcha-id
+      accessTokenKey: demo-access-token
+    authentication:
+      authenticationUrl: http://localhost:8866/auth/authentication-mock
+      authorizationUrl: http://localhost:8866/authorization/authorization-mock
+      excludeUrls: /auth/
+      loginUrl: http://localhost:8866/login
+      appId: 99999999999999999999
+      appKey: 88888888888888888888
+      appSecret: 7777777777777777777
+      appSignature: 66666666666666666666
+    sequence:
+      default:
+        namespace: default-sequence
+        prefix:
+        minValue: 10000000
+        maxValue: 99999999
+        offset: 1
+    service:
+      ETERNITY-COUNTER-INCR:
+        name: "eternity-counter"
+        path: "/front/counter/incrCounter"
+        type: "service"
+        method: "POST"
+        comment: "计数器接口"
+    error:
+      L_ERR_10000:
+        code: 10000
+        message: "执行成功"
+      L_ERR_99999:
+        code: 99999
+        message: "系统异常"
+      L_ERR_10008:
+        code: 10008
+        message: "调用计数器异常 "
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+          lower-case-service-id: true
+      routes:
+        - id: 163
+          uri: http://www.163.com/
+          predicates:
+            - Path=/163/**
+
+---
+spring:
+  profiles: prod
+  datasource:
+    url: jdbc:mysql://db.hearglobal.com:3307/demo_db?useUnicode=true&characterEncoding=utf-8&useSSL=true&useJDBCCompliantTimezoneShift=true&serverTimezone=Asia/Shanghai
+    userName: demo
+    password: My,hg1234
+    supportUtf8mb4: 1
+    initialSize: 50
+    minIdle: 50
+    maxActive: 150
+  redis:
+    host: redis.hearglobal.com
+    password: b840fxG941c15Y59e41
+    port: 6366
+    timeout: 3000
+  rabbitmq:
+    host: mq.hearglobal.com
+    port: 5672
+    userName: demo
+    password: 123456
+    exchange: demo.exchange
+    virtualHost: demo
+    routingKey:
+  elasticsearch:
+    host: es.hearglobal.com
+    port: 10000
+    userName: hg_es_app
+    password: qwer@123
+  mongo:
+    host: mongo.hearglobal.com
+    port: 27017
+    database: demo_db
+    userName: demo
+    password: qwer@123
+  application:
+    swagger:
+      enableSwagger: true
+      enableAdmin: false
+    name: demo-gateway
+    serviceName: demo-gateway
+    productName: demo
+    moduleName: gateway
+    version: 1.0-SNAPSHOT
+    keys:
+      sessionIdKey: demo-session-id
+      captchaIdKey: demo-captcha-id
+      accessTokenKey: demo-access-token
+    authentication:
+      authenticationUrl: http://localhost:8866/auth/authentication-mock
+      authorizationUrl: http://localhost:8866/authorization/authorization-mock
+      excludeUrls: /auth/
+      loginUrl: http://localhost:8866/login
+      appId: 99999999999999999999
+      appKey: 88888888888888888888
+      appSecret: 7777777777777777777
+      appSignature: 66666666666666666666
+    sequence:
+      default:
+        namespace: default-sequence
+        prefix:
+        minValue: 10000000
+        maxValue: 99999999
+        offset: 1
+    service:
+      ETERNITY-COUNTER-INCR:
+        name: "eternity-counter"
+        path: "/front/counter/incrCounter"
+        type: "service"
+        method: "POST"
+        comment: "计数器接口"
+    error:
+      L_ERR_10000:
+        code: 10000
+        message: "执行成功"
+      L_ERR_99999:
+        code: 99999
+        message: "系统异常"
+      L_ERR_10008:
+        code: 10008
+        message: "调用计数器异常 "
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+          lower-case-service-id: true
+      routes:
+        - id: 163
+          uri: http://www.163.com/
+          predicates:
+            - Path=/163/**
