@@ -6,9 +6,9 @@ server:
 spring:
   profiles: dev
   datasource:
-    url: jdbc:mysql://mysql.hearglobal.com:3306/demo_db?useUnicode=true&characterEncoding=utf-8&useSSL=true&useJDBCCompliantTimezoneShift=true&serverTimezone=Asia/Shanghai
-    userName: demo
-    password: My,hg1234
+    url: jdbc:mysql://localhost:3306/demo_db?useUnicode=true&characterEncoding=utf-8&useSSL=true&useJDBCCompliantTimezoneShift=true&serverTimezone=Asia/Shanghai
+    userName: root
+    password: 101541
     supportUtf8mb4: 1
     initialSize: 30
     minIdle: 10
